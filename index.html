@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#fbf7f2">
+<title>传讯 · 字卡与传讯</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+
+<!-- ═══════════ 一、首页：先选功能 ═══════════ -->
+<main id="view-home" class="view view-home">
+  <div class="home-inner">
+    <div class="brand">
+      <div class="brand-mark">伝</div>
+      <h1>传讯</h1>
+      <p class="brand-sub">一个字，一段话，一个能说话的地方</p>
+    </div>
+
+    <div class="entry-list">
+      <button class="entry-card" data-go="kana">
+        <span class="entry-ico"><i class="fas fa-layer-group"></i></span>
+        <span class="entry-text">
+          <strong>字卡聊天</strong>
+          <em>挑一张字卡递过去，Ta 会回你</em>
+        </span>
+        <span class="entry-arrow">›</span>
+      </button>
+
+      <button class="entry-card entry-card-alt" data-go="chuan">
+        <span class="entry-ico"><i class="fas fa-moon"></i></span>
+        <span class="entry-text">
+          <strong>传讯</strong>
+          <em>请传讯师接通 Ta 的能量</em>
+        </span>
+        <span class="entry-arrow">›</span>
+      </button>
+    </div>
+
+    <button class="home-settings" id="open-settings">
+      <i class="fas fa-sliders-h"></i> 设置
+    </button>
+    <p class="home-note">仅作情感陪伴，不采集任何数据</p>
+  </div>
+</main>
+
+<!-- ═══════════ 二、字卡聊天 ═══════════ -->
+<section id="view-kana" class="view view-chat" hidden>
+  <header class="chat-head">
+    <button class="head-btn" data-back="home"><i class="fas fa-chevron-left"></i></button>
+    <div class="head-main">
+      <div class="head-avatar" id="kana-avatar">梦</div>
+      <div class="head-name">
+        <span id="kana-partner-name">梦角</span>
+        <em id="kana-status">字卡都在这里</em>
+      </div>
+    </div>
+    <button class="head-btn" id="kana-cards-btn" title="字卡库"><i class="fas fa-layer-group"></i></button>
+  </header>
+
+  <div class="chat-scroll" id="kana-scroll">
+    <div class="chat-empty" id="kana-empty">
+      <span>还没有说话</span>
+      <em>点左下角的「字卡」，或者直接打字</em>
+    </div>
+  </div>
+
+  <footer class="chat-input">
+    <button class="in-btn" id="kana-pick" title="选一张字卡"><i class="fas fa-layer-group"></i></button>
+    <input id="kana-input" type="text" autocomplete="off" placeholder="说点什么…">
+    <button class="in-send" id="kana-send"><i class="fas fa-paper-plane"></i></button>
+  </footer>
+</section>
+
+<!-- ═══════════ 三、传讯 ═══════════ -->
+<section id="view-chuan" class="view view-chat" hidden>
+  <header class="chat-head">
+    <button class="head-btn" data-back="home"><i class="fas fa-chevron-left"></i></button>
+    <div class="head-main">
+      <div class="head-avatar head-avatar-chuan">讯</div>
+      <div class="head-name">
+        <span>传讯室</span>
+        <em id="chuan-step">第 1 步 · 开场</em>
+      </div>
+    </div>
+    <button class="head-btn" id="chuan-archive" title="传讯档案"><i class="fas fa-book-open"></i></button>
+    <button class="head-btn" id="chuan-end" title="结束并归档"><i class="fas fa-circle-check"></i></button>
+  </header>
+
+  <div class="chat-scroll" id="chuan-scroll"></div>
+
+  <footer class="chat-input">
+    <input id="chuan-input" type="text" autocomplete="off" placeholder="回复传讯师…">
+    <button class="in-send" id="chuan-send"><i class="fas fa-paper-plane"></i></button>
+  </footer>
+</section>
+
+<!-- ═══════════ 四、字卡库抽屉 ═══════════ -->
+<div class="sheet" id="card-sheet" hidden>
+  <div class="sheet-mask" data-close-sheet></div>
+  <div class="sheet-body">
+    <div class="sheet-head">
+      <strong>字卡</strong>
+      <button class="sheet-close" data-close-sheet><i class="fas fa-times"></i></button>
+    </div>
+    <div class="sheet-scroll" id="card-list"></div>
+    <div class="sheet-foot">
+      <button class="ghost-btn" id="card-add">加一张</button>
+      <button class="ghost-btn" id="card-clear">清空</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 五、传讯档案 ═══════════ -->
+<div class="sheet" id="archive-sheet" hidden>
+  <div class="sheet-mask" data-close-archive></div>
+  <div class="sheet-body">
+    <div class="sheet-head">
+      <strong>传讯档案</strong>
+      <button class="sheet-close" data-close-archive><i class="fas fa-times"></i></button>
+    </div>
+    <div class="sheet-scroll archive-list" id="archive-list"></div>
+  </div>
+</div>
+
+<!-- 单次档案回看 -->
+<div class="modal" id="archive-modal" hidden>
+  <div class="modal-mask" data-close-am></div>
+  <div class="modal-body modal-body-tall">
+    <div class="modal-head">
+      <strong id="am-title">这次传讯</strong>
+      <button class="sheet-close" data-close-am><i class="fas fa-times"></i></button>
+    </div>
+    <div class="am-info" id="am-info"></div>
+    <div class="chat-scroll am-scroll" id="am-scroll"></div>
+  </div>
+</div>
+
+<!-- ═══════════ 六、设置 ═══════════ -->
+<div class="modal" id="settings-modal" hidden>
+  <div class="modal-mask" data-close-modal></div>
+  <div class="modal-body">
+    <div class="modal-head">
+      <strong>设置</strong>
+      <button class="sheet-close" data-close-modal><i class="fas fa-times"></i></button>
+    </div>
+
+    <div class="set-group">
+      <div class="set-label">梦角</div>
+      <div class="set-row"><span>名字</span><input id="set-name" type="text" placeholder="梦角"></div>
+      <div class="set-row"><span>头像字</span><input id="set-avatar" type="text" maxlength="2" placeholder="取一个字"></div>
+      <div class="set-row"><span>自动回字卡</span><label class="switch"><input type="checkbox" id="set-auto"><i></i></label></div>
+    </div>
+
+    <div class="set-group">
+      <div class="set-label">传讯师 / 大模型</div>
+      <p class="set-tip">不填也能用：会用内置规则生成本地版传讯。填了就由模型现场感应。地址填 OpenAI 兼容的上游（官方接口在浏览器里常被跨域拦，建议填自己的代理地址）。</p>
+      <div class="set-row"><span>接口地址</span><input id="set-api-base" type="text" placeholder="https://xxx/v1"></div>
+      <div class="set-row"><span>密钥</span><input id="set-api-key" type="password" placeholder="sk-…"></div>
+      <div class="set-row"><span>模型</span><input id="set-api-model" type="text" placeholder="gpt-4o-mini"></div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="ghost-btn" id="set-clear-chuan">清空传讯档案</button>
+      <button class="primary-btn" data-close-modal>保存并关闭</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/tarot78.js?v=1"></script>
+<script src="js/core.js?v=1"></script>
+<script src="js/chat.js?v=1"></script>
+<script src="js/channeling.js?v=1"></script>
+<script src="js/boot.js?v=1"></script>
+</body>
+</html>

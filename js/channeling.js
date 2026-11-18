@@ -181,7 +181,7 @@
     const name = C.DB.settings.partnerName || '梦角';
     const c = cards.map(x => x.name + '（' + (x.upright ? '正位' : '逆位') + '）').join('、');
     const first = cards[0];
-    const kw = first.upright ? first.u : first.r;
+    const kw = first.upright ? first.up : first.rev;
     return [
       '（三张牌摊开了：' + c + '。）',
       '“我在。”',
